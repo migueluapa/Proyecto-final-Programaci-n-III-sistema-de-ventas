@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1
         }
         private void Button2_Click(object sender, EventArgs e)
         {
-
+            //Este codigo es para que cuando algun usuario no ingrese datos le muestre un mensaje que diga que debe ingresar los datos del proveedor.
             if (string.IsNullOrEmpty(txtproveedor.Text) | string.IsNullOrEmpty(txtdireccion.Text) | string.IsNullOrEmpty(txtdireccion.Text) | string.IsNullOrEmpty(txtemail.Text) | string.IsNullOrEmpty(txtruc.Text) | string.IsNullOrEmpty(txtproveedor.Text) | string.IsNullOrEmpty(txttelefono.Text))
             {
                 MessageBox.Show("Debe Ingesar los Datos del  Proveedor", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -57,29 +57,39 @@ namespace WindowsFormsApplication1
                 return;
             }
 
-
+            //Este Comando nos permite   insertar datos a nuestra tabla proveedor.
 
             SQLiteCommand cmd = new SQLiteCommand("insert into proveedor values(@id_proveedor,@des_proveedor,@telefono,@direccion,@ruc,@email)", conexion);
 
-            cmd.Parameters.Add(new SQLiteParameter("@id_proveedor", txtcodigo.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@des_proveedor", txtproveedor.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@telefono", txttelefono.Text));
+            //Estos 6 parametros representan a los seis campos que hay en nuestra tabla proveedor.
+            try
+            {
+                cmd.Parameters.Add(new SQLiteParameter("@id_proveedor", txtcodigo.Text)); // Este parametro va hacer representando por por la caja de texto txt codigo
+            cmd.Parameters.Add(new SQLiteParameter("@des_proveedor", txtproveedor.Text));   // Este parametro va hacer representando por por la caja de texto txt proveedor
+            cmd.Parameters.Add(new SQLiteParameter("@telefono", txttelefono.Text));   // Este parametro va hacer representando por por la caja de texto txt telefono
 
-            cmd.Parameters.Add(new SQLiteParameter("@direccion", txtdireccion.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@ruc", txtruc.Text));
-        
-            cmd.Parameters.Add(new SQLiteParameter("@email", txtemail.Text));
+            cmd.Parameters.Add(new SQLiteParameter("@direccion", txtdireccion.Text));   // Este parametro va hacer representando por por la caja de texto txt direccion
+            cmd.Parameters.Add(new SQLiteParameter("@ruc", txtruc.Text));   // Este parametro va hacer representando por por la caja de texto txt ruc que es el registro unico de contribuyente
+
+            cmd.Parameters.Add(new SQLiteParameter("@email", txtemail.Text));   // Este parametro va hacer representando por por la caja de texto txt email
 
 
             conexion.Open();
 
             cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("error al insertar los Datos");
+            }
+
 
 
             //     conexion.Close()
 
 
-            MessageBox.Show("Asido Registrado los Datos", "Correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Asido Registrado los Datos", "Correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information); // Este es el mensaje que  nos va a mostrar  despues de haber insertado los datos
 
 
             borar();
@@ -99,6 +109,7 @@ namespace WindowsFormsApplication1
         private void Button3_Click(object sender, EventArgs e)
         {
 
+            // Todo este codigo equivale para poder  modificar o actualizar los datos del proveedor
             SQLiteCommand cmd = new SQLiteCommand("update proveedor set des_proveedor=@des_proveedor,telefono=@telefono,direccion=@direccion,ruc=@ruc,email=@email  where id_proveedor=@id_proveedor", conexion);
 
 
@@ -145,12 +156,12 @@ namespace WindowsFormsApplication1
 
         private void Button4_Click(object sender, EventArgs e)
         {
-
+            // Este codigo nos pemite eliminar un  proveedor de nuestra tabla
 
             SQLiteCommand cmd = new SQLiteCommand("delete  from proveedor where id_proveedor=@id_proveedor", conexion);
 
 
-            cmd.Parameters.Add(new SQLiteParameter("@id_proveedor", txtcodigo.Text));
+            cmd.Parameters.Add(new SQLiteParameter("@id_proveedor", txtcodigo.Text));  // Solo hay un parametro porque vamos a eliminar por id proveedor
 
             conexion.Open();
 

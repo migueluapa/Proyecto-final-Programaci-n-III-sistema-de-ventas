@@ -38,9 +38,10 @@ namespace WindowsFormsApplication1
 
 
         private  void cargardato()
- {
 
-     conexion = new SQLiteConnection("Data Source=C:/Users/User/Desktop/Sistema Ventas C#SQLITE/Ventas_Producto_Sqlite.s3db");
+ {
+           
+            conexion = new SQLiteConnection("Data Source=C:/Users/User/Desktop/Sistema Ventas C#SQLITE/Ventas_Producto_Sqlite.s3db");
 
      //conexion.SentenciaSQL SentenciaSQL = new conexion.SentenciaSQL();
 
@@ -66,39 +67,51 @@ namespace WindowsFormsApplication1
 
         private void button3_Click(object sender, EventArgs e)
         {
+
+           
             
-            //conexion = new SQLiteConnection("Data Source=C:/Users/juan/Desktop/Sistema Ventas C#SQLITE/Ventas_Producto_Sqlite.s3db");
+                //Este codigo es para que cuando algun usuario no ingrese datos le muestre un mensaje que diga que debe ingresar los datos del cliente.
 
-            if (string.IsNullOrEmpty(txtcedula.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txtdireccion.Text) | string.IsNullOrEmpty(txtemail.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txttelefono.Text))
+                if (string.IsNullOrEmpty(txtcedula.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txtdireccion.Text) | string.IsNullOrEmpty(txtemail.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txtcliente.Text) | string.IsNullOrEmpty(txttelefono.Text))
+                {
+                    MessageBox.Show("Debe Ingesar los Datos del Cliente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                    return;
+                }
+
+
+                //Este Comando nos permite   insertar datos a nuestra tabla cliente.
+
+
+                SQLiteCommand cmd = new SQLiteCommand("insert into cliente values(@id_cliente,@cedula,@cliente,@direccion,@telefono,@email)", conexion);
+
+            //Estos 6 parametros representan a los seis campos que hay en nuestra tabla cliente.
+            try
             {
-                MessageBox.Show("Debe Ingesar los Datos del Cliente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmd.Parameters.Add(new SQLiteParameter("@id_cliente", txtcodigo.Text)); // Este parametro va hacer representando por por la caja de texto txt codigo
+                cmd.Parameters.Add(new SQLiteParameter("@cedula", txtcedula.Text));     // Este parametro va hacer representando por por la caja de texto txt cedula
+                cmd.Parameters.Add(new SQLiteParameter("@cliente", txtcliente.Text));  // Este parametro va hacer representando por por la caja de texto txt cliente
+
+                cmd.Parameters.Add(new SQLiteParameter("@direccion", txtdireccion.Text)); // Este parametro va hacer representando por por la caja de texto txt direccion
+                cmd.Parameters.Add(new SQLiteParameter("@telefono", txttelefono.Text)); // Este parametro va hacer representando por por la caja de texto txt telefono
+                cmd.Parameters.Add(new SQLiteParameter("@email", txtemail.Text));  // Este parametro va hacer representando por por la caja de texto txt email
 
 
-                return;
+                conexion.Open();
+
+                cmd.ExecuteNonQuery();
             }
 
-
-
-            SQLiteCommand cmd = new SQLiteCommand("insert into cliente values(@id_cliente,@cedula,@cliente,@direccion,@telefono,@email)", conexion);
-
-            cmd.Parameters.Add(new SQLiteParameter("@id_cliente", txtcodigo.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@cedula", txtcedula.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@cliente", txtcliente.Text));
-
-            cmd.Parameters.Add(new SQLiteParameter("@direccion", txtdireccion.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@telefono", txttelefono.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@email", txtemail.Text));
-
-
-            conexion.Open();
-
-            cmd.ExecuteNonQuery();
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("error al insertar los Datos");
+            }
 
             //     conexion.Close()
 
-
-            MessageBox.Show("Asido Registrado los Datos", "Correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+       
+            MessageBox.Show("Asido Registrado los Datos", "Correctamente", MessageBoxButtons.OK, MessageBoxIcon.Information); // Este es el mensaje que  nos va a mostrar  despues de haber insertado los datos correctamente
 
 
             borar();
@@ -132,7 +145,7 @@ namespace WindowsFormsApplication1
 
         public void autogenerar()
         {
-            //conexion = new SQLiteConnection("Data Source=C:/Users/juan/Desktop/Sistema Ventas C#SQLITE/Ventas_Producto_Sqlite.s3db");
+            //conexion = new SQLiteConnection("Data Source=C:/Users/miguel/Desktop/Sistema Ventas C#SQLITE/Ventas_Producto_Sqlite.s3db");
             string ca;
             int t;
 
@@ -194,6 +207,7 @@ namespace WindowsFormsApplication1
 
 
             {
+             
                 conexion.Open();
 
                 string sql = "SELECT   * FROM    cliente     WHERE cliente like '" + txtbuscar.Text + "%'";
@@ -216,7 +230,7 @@ namespace WindowsFormsApplication1
 
 
 
-
+            // Todo este codigo equivale para poder  modificar o actualizar los datos del cliente
 
             SQLiteCommand cmd = new SQLiteCommand("update cliente set cedula=@cedula,cliente=@cliente,direccion=@direccion,telefono=@telefono,email=@email  where id_cliente=@id_cliente", conexion);
 
@@ -269,13 +283,13 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            // Este codigo nos pemite eliminar un cliente de nuestra tabla
 
 
             SQLiteCommand cmd = new SQLiteCommand("delete  from  cliente where id_cliente=@id_cliente", conexion);
 
 
-            cmd.Parameters.Add(new SQLiteParameter("@id_cliente", txtcodigo.Text));
+            cmd.Parameters.Add(new SQLiteParameter("@id_cliente", txtcodigo.Text)); // Solo hay un parametro porque vamos a eliminar por id cliente
 
             conexion.Open();
 
@@ -395,6 +409,21 @@ namespace WindowsFormsApplication1
                 e.Handled = true;
                 return;
             }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtcodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

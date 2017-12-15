@@ -199,7 +199,7 @@
             // txttelefono
             // 
             this.txttelefono.Location = new System.Drawing.Point(399, 58);
-            this.txttelefono.MaxLength = 8;
+            this.txttelefono.MaxLength = 10;
             this.txttelefono.Name = "txttelefono";
             this.txttelefono.Size = new System.Drawing.Size(234, 20);
             this.txttelefono.TabIndex = 173;

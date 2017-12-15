@@ -123,7 +123,7 @@ namespace WindowsFormsApplication1
 
         private void Button7_Click(object sender, EventArgs e)
         {
-
+            //Este codigo es para que cuando algun usuario no ingrese datos le muestre un mensaje que diga que debe ingresar los datos de categoria.
             if (string.IsNullOrEmpty(txtcodigo.Text) | string.IsNullOrEmpty(txtmarca.Text) | string.IsNullOrEmpty(txtmarca.Text))
             {
                 MessageBox.Show("Debe Ingesar los Datos del  Categoria", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -133,12 +133,16 @@ namespace WindowsFormsApplication1
             }
 
 
+            //Este Comando nos permite   insertar datos a nuestra tabla categoria.
 
             SQLiteCommand cmd = new SQLiteCommand("insert into categorias values(@id_categoria,@categoria)", conexion);
 
-            cmd.Parameters.Add(new SQLiteParameter("@id_categoria", txtcodigo.Text));
-            cmd.Parameters.Add(new SQLiteParameter("@categoria", txtmarca.Text));
-  
+
+
+            //Estos 2 parametros representan a los dos campos que hay en nuestra tabla categoria.
+            cmd.Parameters.Add(new SQLiteParameter("@id_categoria", txtcodigo.Text)); // Este parametro va hacer representando por por la caja de texto txt codigo categoria
+            cmd.Parameters.Add(new SQLiteParameter("@categoria", txtmarca.Text)); // Este parametro va hacer representando por por la caja de texto txt marca
+
 
             conexion.Open();
 

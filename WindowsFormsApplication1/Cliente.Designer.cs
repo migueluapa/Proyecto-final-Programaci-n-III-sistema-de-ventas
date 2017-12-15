@@ -113,6 +113,7 @@
             this.label10.TabIndex = 151;
             this.label10.Text = "Cliente";
             this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // groupBox1
             // 
@@ -251,6 +252,7 @@
             this.txtcodigo.Name = "txtcodigo";
             this.txtcodigo.Size = new System.Drawing.Size(159, 20);
             this.txtcodigo.TabIndex = 159;
+            this.txtcodigo.TextChanged += new System.EventHandler(this.txtcodigo_TextChanged);
             // 
             // Label1
             // 
@@ -260,6 +262,7 @@
             this.Label1.Size = new System.Drawing.Size(19, 13);
             this.Label1.TabIndex = 158;
             this.Label1.Text = "N°";
+            this.Label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // groupBox2
             // 
@@ -289,7 +292,7 @@
             // txtcedula
             // 
             this.txtcedula.Location = new System.Drawing.Point(352, 17);
-            this.txtcedula.MaxLength = 9;
+            this.txtcedula.MaxLength = 15;
             this.txtcedula.Name = "txtcedula";
             this.txtcedula.Size = new System.Drawing.Size(219, 20);
             this.txtcedula.TabIndex = 151;

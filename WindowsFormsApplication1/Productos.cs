@@ -200,6 +200,7 @@ namespace WindowsFormsApplication1
 
         private void Button3_Click(object sender, EventArgs e)
         {
+            //Este codigo es para que cuando algun usuario no ingrese datos correctamente le muestre un mensaje que diga que debe ingresar los datos del producto.
             if (string.IsNullOrEmpty(txtproducto.Text) | string.IsNullOrEmpty(txtcompra.Text) | string.IsNullOrEmpty(txtventa.Text) | string.IsNullOrEmpty(cboproveedor.Text) | string.IsNullOrEmpty(txtstock.Text) | string.IsNullOrEmpty(cbomarca.Text) | string.IsNullOrEmpty(cbocategoria.Text))
             {
                 MessageBox.Show("Debe Ingesar los Datos del Producto", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -207,11 +208,13 @@ namespace WindowsFormsApplication1
 
                 return;
             }
+            try
+            {
 
-
-
-            SQLiteCommand cmd = new SQLiteCommand("insert into productos values(@id_producto,@serie,@des_producto,@compra_compra,@precio_venta,@proveedor,@stock_actual,@unidad_medida,@fecha_ingreso,@marca,@categoria)", conexion);
-
+                //Este Comando nos permite   insertar datos a nuestra tabla productos.
+                SQLiteCommand cmd = new SQLiteCommand("insert into productos values(@id_producto,@serie,@des_producto,@compra_compra,@precio_venta,@proveedor,@stock_actual,@unidad_medida,@fecha_ingreso,@marca,@categoria)", conexion);
+            
+            //Estos 11 parametros representan a los once campos que hay en nuestra tabla productos.
             cmd.Parameters.Add(new SQLiteParameter("@id_producto", txtcodigo.Text));
             cmd.Parameters.Add(new SQLiteParameter("@serie", txtserie.Text));
             cmd.Parameters.Add(new SQLiteParameter("@des_producto", txtproducto.Text));
@@ -229,6 +232,12 @@ namespace WindowsFormsApplication1
             conexion.Open();
 
             cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("error al insertar los Datos intertelo correctamente");
+            }
 
 
             //     conexion.Close()
@@ -271,9 +280,12 @@ namespace WindowsFormsApplication1
 
         private void Button2_Click(object sender, EventArgs e)
         {
-
-            SQLiteCommand cmd = new SQLiteCommand("update productos set serie=@serie,des_producto=@des_producto,compra_compra=@compra_compra,precio_venta=@precio_venta,proveedor=@proveedor,stock_actual=@stock_actual,unidad_medida=@unidad_medida,fecha_ingreso=@fecha_ingreso,marca=@marca,categoria=@categoria  where id_producto=@id_producto", conexion);
-
+            try
+            {
+                //Este Comando nos permite   actualizar  datos a nuestra tabla productos.
+                SQLiteCommand cmd = new SQLiteCommand("update productos set serie=@serie,des_producto=@des_producto,compra_compra=@compra_compra,precio_venta=@precio_venta,proveedor=@proveedor,stock_actual=@stock_actual,unidad_medida=@unidad_medida,fecha_ingreso=@fecha_ingreso,marca=@marca,categoria=@categoria  where id_producto=@id_producto", conexion);
+          
+       
             cmd.Parameters.Add(new SQLiteParameter("@id_producto", txtcodigo.Text));
             cmd.Parameters.Add(new SQLiteParameter("@serie", txtserie.Text));
             cmd.Parameters.Add(new SQLiteParameter("@des_producto", txtproducto.Text));
@@ -291,6 +303,12 @@ namespace WindowsFormsApplication1
             conexion.Open();
 
             cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("error al insertar los Datos");
+            }
 
 
             //     conexion.Close()
